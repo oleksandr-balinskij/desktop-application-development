@@ -4,7 +4,7 @@ app = CTk()
 app.title("Викторина")
 app.geometry("300x300")
 
-lbl = CTkLabel(app, text="Яка структура даних зберігає пари ключ-значення?")
+lbl = CTkLabel(app, wraplength=300, text="Яка структура даних зберігає пари ключ-значення?")
 lbl.pack(pady=10)
 
 var = IntVar()
