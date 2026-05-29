@@ -14,8 +14,10 @@ def close_menu():
 def change_mode():
     if light_mode.get() == 1:
         set_appearance_mode("light")
+        light_mode.configure(text="☀")
     else:
         set_appearance_mode("dark")
+        light_mode.configure(text="☾")
 
 questions = [
     {
@@ -34,16 +36,16 @@ questions = [
     },
 
     {
-       "question": "в якій серії грифіт предал отряд",
+       "question": "в якій серії грифіт зрадив загін",
        "answers": ["7", "18", "23", "15"],
        "correct": "23"
 
     },
 
     { 
-       "question": "що зробив грифіт з гатсом в затменні",
-       "answers": ["помирився", "вбив", "іздевався над ним", "оставив"],
-       "correct": "іздевався над ним"
+       "question": "що зробив грифіт з гатсом в затемненні",
+       "answers": ["помирився", "вбив", "знущався над ним", "залишив"],
+       "correct": "знущався над ним"
     }        
 ]
 
@@ -62,21 +64,21 @@ def load_question():
     rb2.configure(text=voprosi [1])
     rb3.configure(text=voprosi [2])
     rb4.configure(text=voprosi [3])
+
+    radio_var.set(-1)
     
 def check_answer():
     global count
     if btn_answer.cget("text") == "Відповісти":
         if radio_var.get() == index_right:
-            result.configure(text="Правильно!",  text_color="green")
-            count += 1
-            if count < len(questions):
-                load_question()
-            else:
-                btn_answer.configure(text="Почати знову")
+            result.configure(text="Правильно!", text_color="green")
+            if count < len(questions) - 1:
+                count += 1
+                btn_answer.configure(text="Далі")
         else:
             result.configure(text="Неправильно!", text_color="red")
     else:
-        count = 0
+        result.configure(text="")
         btn_answer.configure(text="Відповісти")
         load_question()
 
