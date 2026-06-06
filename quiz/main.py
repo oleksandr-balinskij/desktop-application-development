@@ -6,6 +6,18 @@ app.geometry("400x320")
 app.title("quiz")
 
 def open_menu():
+    txt = ""
+    for i in questions:
+        txt += f"{i['question']}\n"
+        if i["full_answers"] == 0:
+            txt += 'Успішність: немає данних\n\n'
+        else:
+            x = i["true_answers"] / i["full_answers"] * 100
+            txt += f"Успішність: {round(x, 2)}%\n\n"
+    tx_box.configure(state="normal")   
+    tx_box.delete("0.0", END)
+    tx_box.insert("0.0", txt)
+    tx_box.configure(state="disabled") 
     frm_menu.lift()
 
 def close_menu():
@@ -23,29 +35,34 @@ questions = [
     {
        "question": "в якому році випустився мультсеріал берсерк",
        "answers": ["1998", "1991", "1987", "1981"],
-       "correct": "1991"
-
+       "correct": "1991",
+       "true_answers": 0,
+       "full_answers": 0
     },
 
     {
        "question": "в якій серії була остання схватка грифіта та гатса",
        "answers": ["21", "18", "25", "11"],
-       "correct": "18"
-
+       "correct": "18",
+       "true_answers": 0,
+       "full_answers": 0
        
     },
 
     {
        "question": "в якій серії грифіт зрадив загін",
        "answers": ["7", "18", "23", "15"],
-       "correct": "23"
-
+       "correct": "23",
+       "true_answers": 0,
+       "full_answers": 0
     },
 
     { 
        "question": "що зробив грифіт з гатсом в затемненні",
        "answers": ["помирився", "вбив", "знущався над ним", "залишив"],
-       "correct": "знущався над ним"
+       "correct": "знущався над ним",
+       "true_answers": 0,
+       "full_answers": 0
     }        
 ]
 
@@ -60,21 +77,26 @@ def load_question():
     voprosi = q['answers']
     shuffle(voprosi)
     index_right=voprosi.index(q["correct"])
-    rb1.configure(text=voprosi [0])
-    rb2.configure(text=voprosi [1])
-    rb3.configure(text=voprosi [2])
-    rb4.configure(text=voprosi [3])
+    rb1.configure(text=voprosi[0])
+    rb2.configure(text=voprosi[1])
+    rb3.configure(text=voprosi[2])
+    rb4.configure(text=voprosi[3])
 
     radio_var.set(-1)
     
 def check_answer():
     global count
     if btn_answer.cget("text") == "Відповісти":
+        questions[count]["full_answers"] += 1
         if radio_var.get() == index_right:
+            questions[count]["true_answers"] += 1
             result.configure(text="Правильно!", text_color="green")
             if count < len(questions) - 1:
                 count += 1
                 btn_answer.configure(text="Далі")
+            else:
+                count = 0
+                btn_answer.configure(text="почати знову")
         else:
             result.configure(text="Неправильно!", text_color="red")
     else:
@@ -106,6 +128,7 @@ question.grid(row=1, column=0, columnspan=2, pady=30)
 light_mode = CTkSwitch(frm_menu, text="☀", command=change_mode)
 light_mode.grid(row=0, column=1 , sticky="e")
 
+light_mode.select()
 
 tx_box = CTkTextbox(frm_menu, )
 tx_box.grid(row=1, column=0, columnspan=2, sticky="wens", padx=2, pady=2)
