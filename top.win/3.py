@@ -8,6 +8,7 @@ def check():
     result_window = CTkToplevel(app)
     result_window.geometry("300x150")
     result_window.title("Результати")
+    result_window.attributes("-topmost", True)
 
     age = int(entry_age.get())
     height = int(entry_height.get())
