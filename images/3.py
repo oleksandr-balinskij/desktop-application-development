@@ -15,11 +15,15 @@ img4 = CTkImage(Image.open("ico4.png"), size=(20, 20))
 
 btn1 = CTkButton(frm, text="Головна", image=img1)
 btn1.pack(side="left", padx=5)
+
 btn2 = CTkButton(frm, text="Профіль", image=img2)
 btn2.pack(side="left", padx=5)
+
 btn3 = CTkButton(frm, text="Налаштування", image=img3)
 btn3.pack(side="left", padx=5)
+
 btn4 = CTkButton(frm, text="Вихід", image=img4)
+btn4.pack(side="left", padx=5)
 
 main_img = CTkImage(Image.open("dog.jpg"), size=(150, 150))
 
